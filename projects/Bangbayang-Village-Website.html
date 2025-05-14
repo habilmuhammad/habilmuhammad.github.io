@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bangbayang Village Website</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    .bg-primary { background-color: #a38b6d; }
+    .text-primary { color: #a38b6d; }
+    .hover\:zoom:hover { transform: scale(1.03); transition: transform 0.4s ease-in-out; }
+    .modal-fade { animation: fadeIn 0.3s ease-out; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0f172a;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+        
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+    
+    .gallery-item img {
+      transition: opacity 0.3s ease;
+    }
+
+    .gallery-item img {
+     height: 300px;
+     object-fit: cover;
+     width: 100%;
+    }
+
+       .gradient-text {
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+
+    .gallery-item:hover img {
+      opacity: 0.9;
+      transform: scale(1.02);
+    }
+
+    .gallery-item .description {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+      color: white;
+      padding: 1rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .gallery-item:hover .description {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .swiper-button-next,
+    .swiper-button-prev {
+      color: #000;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      width: 72px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .swiper-button-next:after,
+    .swiper-button-prev:after {
+      font-size: 36px;
+      font-weight: 300;
+      transition: font-weight 0.3s ease, transform 0.3s ease;
+    }
+
+    .swiper-button-next:hover:after,
+    .swiper-button-prev:hover:after {
+      font-weight: 700;
+      transform: scale(1.1);
+    }
+
+    .swiper-button-next:hover,
+    .swiper-button-prev:hover {
+      background: rgba(255, 255, 255, 1);
+      transform: scale(1.05);
+    }
+
+ .modal-image {
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb; /* Grey border */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+
+.swiper-slide {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    padding: 16px; /* Add padding around the image */
+}
+
+@media (max-width: 1024px) { /* For tablets and smaller laptops */
+    .modal-image {
+        max-width: 90%;
+        max-height: 70vh;
+    }
+}
+
+@media (max-width: 768px) { /* For tablets */
+    .modal-image {
+        max-width: 90%;
+        max-height: 65vh;
+    }
+}
+
+@media (max-width: 480px) { /* For smaller devices (mobile) */
+    .modal-image {
+        max-width: 100%;
+        max-height: 60vh;
+    }
+}
+
+  </style>
+</head>
+
+<body class="bg-[#1c1f2a] text-gray-100 font-sans">
+
+  <!-- Gallery Section -->
+<section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-16">
+
+<!-- Back to Home -->
+<div class="mb-4 sm:mb-6">
+  <a href="/" class="inline-flex items-center text-white-500 hover:underline text-lg font-medium">
+    <i class="fa-solid fa-arrow-left mr-2"></i> Back to Home
+  </a>
+</div>
+
+<!-- Title with gradient -->
+<h2 class="text-3xl sm:text-5xl font-extrabold mb-6 sm:mb-10 text-left leading-tight">
+  <span class="bg-gradient-to-r from-indigo-500 via-blue-500 to-purple-600 text-transparent bg-clip-text">
+    Project Gallery
+  </span>
+</h2>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+  
+  <!-- Gallery Item 1 -->
+<div class="gallery-item cursor-pointer" onclick="openModal(0)">
+    <img src="/assets/img/Bangbayang/landingpage.jpg" alt="Gallery 1" class="rounded-lg object-cover w-full h-64 md:h-80 lg:h-96">
+    <div class="description mt-4">
+      <!-- <h3 class="text-lg font-semibold">Lobby Area</h3>
+      <p class="text-sm">A modern lobby with eco-friendly lighting and reception design.</p> -->
+  </div>
+</div>
+
+  <!-- Gallery Item 2 -->
+<div class="gallery-item cursor-pointer" onclick="openModal(1)">
+    <img src="/assets/img/Bangbayang/haladmin.jpg" alt="Gallery 1" class="rounded-lg object-cover w-full h-64 md:h-80 lg:h-96">
+    <div class="description mt-4">
+      <!-- <h3 class="text-lg font-semibold">Lobby Area</h3>
+      <p class="text-sm">A modern lobby with eco-friendly lighting and reception design.</p> -->
+  </div>
+</div>
+
+  <!-- Gallery Item 3 -->
+<div class="gallery-item cursor-pointer" onclick="openModal(2)">
+    <img src="/assets/img/Bangbayang/halpengaduan.jpg" alt="Gallery 1" class="rounded-lg object-cover w-full h-64 md:h-80 lg:h-96">
+    <div class="description mt-4">
+      <!-- <h3 class="text-lg font-semibold">Lobby Area</h3>
+      <p class="text-sm">A modern lobby with eco-friendly lighting and reception design.</p> -->
+  </div>
+</div>
+
+  <!-- Gallery Item 4 -->
+<div class="gallery-item cursor-pointer" onclick="openModal(3)">
+    <img src="/assets/img/Bangbayang/halusulan.jpg" alt="Gallery 1" class="rounded-lg object-cover w-full h-64 md:h-80 lg:h-96">
+    <div class="description mt-4">
+      <!-- <h3 class="text-lg font-semibold">Lobby Area</h3>
+      <p class="text-sm">A modern lobby with eco-friendly lighting and reception design.</p> -->
+  </div>
+</div>
+
+  <!-- Modal -->
+  <div id="modal" class="fixed inset-0 bg-white z-50 hidden items-center justify-center">
+    <div class="relative w-full h-full modal-fade flex items-center justify-center">
+      <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-600 hover:text-red-500 text-2xl font-bold z-50 transition-colors duration-300">×</button>
+      <div class="absolute top-4 right-16 text-gray-600 text-base font-medium z-50" id="slide-counter"></div>
+
+      <!-- Panah Navigasi -->
+      <div class="swiper-button-prev absolute left-4 top-1/2 -translate-y-1/2 z-50"></div>
+      <div class="swiper-button-next absolute right-4 top-1/2 -translate-y-1/2 z-50"></div> 
+
+      <!-- Swiper -->
+   <div class="swiper mySwiper2 w-full max-w-5xl h-auto">
+ <div class="swiper-wrapper">
+    <div class="swiper-slide flex items-center justify-center p-4 sm:p-6 md:p-8">
+        <img src="/assets/img/Bangbayang/landingpage.jpg"
+             class="modal-image w-full h-auto max-w-[90vw] max-h-[80vh] object-contain rounded-lg border border-gray-200 shadow-lg"
+             alt="Slide 1">
+    </div>
+    <div class="swiper-slide flex items-center justify-center p-4 sm:p-6 md:p-8">
+        <img src="/assets/img/Bangbayang/haladmin.jpg"
+             class="modal-image w-full h-auto max-w-[90vw] max-h-[80vh] object-contain rounded-lg border border-gray-200 shadow-lg"
+             alt="Slide 2">
+    </div>
+    <div class="swiper-slide flex items-center justify-center p-4 sm:p-6 md:p-8">
+        <img src="/assets/img/Bangbayang/halpengaduan.jpg"
+             class="modal-image w-full h-auto max-w-[90vw] max-h-[80vh] object-contain rounded-lg border border-gray-200 shadow-lg"
+             alt="Slide 3">
+    </div>
+    <div class="swiper-slide flex items-center justify-center p-4 sm:p-6 md:p-8">
+        <img src="/assets/img/Bangbayang/halusulan.jpg"
+             class="modal-image w-full h-auto max-w-[90vw] max-h-[80vh] object-contain rounded-lg border border-gray-200 shadow-lg"
+             alt="Slide 4">
+    </div>
+</div>
+</div>
+
+  <!-- Swiper & Modal Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+  <script>
+    const modal = document.getElementById('modal');
+    const slideCounter = document.getElementById('slide-counter');
+    let swiperInstance;
+
+    function openModal(index) {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+
+      if (!swiperInstance) {
+        swiperInstance = new Swiper('.mySwiper2', {
+          loop: true,
+          navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+          },
+          on: {
+            slideChange: function () {
+              updateSlideCounter();
+            },
+          },
+        });
+      }
+
+      swiperInstance.slideToLoop(index, 0);
+      updateSlideCounter();
+    }
+
+    function closeModal() {
+      modal.classList.remove('flex');
+      modal.classList.add('hidden');
+    }
+
+    function updateSlideCounter() {
+      const totalSlides = document.querySelectorAll('.swiper-slide:not(.swiper-slide-duplicate)').length;
+      const currentSlide = swiperInstance.realIndex + 1;
+      slideCounter.textContent = `${currentSlide}/${totalSlides}`;
+    }
+  </script>
+</body>
+</html>
