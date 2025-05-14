@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habil Muhammad Rizky | Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+
+  <!-- AOS CSS -->
+<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+<!-- AOS JS -->
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0f172a;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 2.5rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0.5rem;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: linear-gradient(to bottom, #3b82f6, #8b5cf6);
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .skill-bar {
+            height: 0.5rem;
+            background-color: #1e293b;
+            border-radius: 0.25rem;
+            overflow: hidden;
+        }
+        
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            border-radius: 0.25rem;
+            transition: width 1s ease-in-out;
+        }
+        
+        .floating {
+            animation: floating 6s ease-in-out infinite;
+        }
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 18px;
+    display: none;
+    z-index: 1000;
+    transition: opacity 0.3s ease;
+    animation: float 2s ease-in-out infinite;
+}
+
+/* Saat tampil */
+.back-to-top.active {
+    display: block;
+}
+
+/* Responsif untuk tablet */
+@media (max-width: 768px) {
+    .back-to-top {
+        bottom: 20px;
+        right: 20px;
+        font-size: 16px;
+        padding: 8px 12px;
+    }
+}
+
+/* Responsif untuk smartphone */
+@media (max-width: 480px) {
+    .back-to-top {
+        bottom: 15px;
+        right: 15px;
+        font-size: 14px;
+        padding: 6px 10px;
+    }
+}
+
+.back-to-top.active {
+    display: block; /* Muncul ketika di-scroll */
+}
+ 
+        @layer utilities {
+         @keyframes float {
+         0%, 100% { transform: translateY(0); }
+         50% { transform: translateY(-10px); }
+        }
+
+         .animate-float {
+        animation: float 3s ease-in-out infinite;
+         }
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .glow {
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+        }
+        
+        .glow:hover {
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.8);
+        }
+
+        
+    </style>
+</head>
+
+<body class="min-h-screen">
+    <!-- 3D Background -->
+    <div id="3d-background" class="fixed inset-0 -z-10 opacity-20"></div>
+    
+    <!-- Particles -->
+    <div id="particles-js" class="fixed inset-0 -z-10"></div>
+
+    <!-- Back to top -->
+     <a href="#" class="back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    </a>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-slate-900 bg-opacity-80 backdrop-blur-md z-50 shadow-lg">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="/" class="text-2xl font-bold gradient-text">HMR</a>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="nav-link">Home</a>
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#experience" class="nav-link">Experience</a>
+                    <a href="#projects" class="nav-link">Projects</a>
+                    <a href="#skills" class="nav-link">Skills</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                </div>
+                <button class="md:hidden focus:outline-none" id="menu-toggle">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="md:hidden hidden mt-4" id="mobile-menu">
+                <div class="flex flex-col space-y-3">
+                    <a href="#home" class="nav-link">Home</a>
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#experience" class="nav-link">Experience</a>
+                    <a href="#projects" class="nav-link">Projects</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+<section id="home" class="min-h-screen flex items-center pt-20" data-aos="fade-up">
+  <div class="container mx-auto px-6 py-20">
+    <div class="flex flex-col md:flex-row items-center">
+      
+      <!-- TEKS KIRI -->
+      <div class="md:w-1/2 mb-12 md:mb-0" data-aos="fade-left" data-aos-delay="400">
+        <h1 class="text-4xl md:text-6xl font-bold mb-4">
+          Hi, I'm <span class="gradient-text">Habil Muhammad Rizky</span>
+        </h1>
+        <h2 class="text-2xl md:text-3xl mb-6">
+          Informatics Bachelor's
+        </h2>
+        <p class="text-lg mb-8 text-slate-300">
+          Passionate about learning new technologies and solving real-world problems through software development.
+        </p>
+        <div class="flex space-x-4">
+          <a href="#contact" class="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full font-medium hover:opacity-90 transition-all glow" data-aos="fade-up" data-aos-delay="400">Contact Me</a>
+          <a href="#projects" class="px-6 py-3 border border-blue-500 rounded-full font-medium hover:bg-blue-500 hover:bg-opacity-10 transition-all" data-aos="fade-up" data-aos-delay="500">View Projects</a>
+        </div>
+      </div>
+
+      <!-- FOTO KANAN -->
+      <div class="md:w-1/2 flex justify-center" data-aos="zoom-in" data-aos-delay="600">
+        <div class="relative w-56 h-56 md:w-72 md:h-72 animate-float">
+            <!-- Background blur efek -->
+            <div class="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 blur-xl opacity-30"></div>
+            <div class="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 blur-md opacity-50"></div>
+        
+            <!-- Lingkaran profil -->
+            <div class="relative w-full h-full rounded-full overflow-hidden border-4 border-blue-500 border-opacity-40 shadow-xl">
+              <img src="/assets/img/PasFoto.jpg" alt="Profile"
+                class="w-full h-full object-cover object-center rounded-full" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Animate On Scroll -->
+<script>
+    AOS.init({
+        duration: 2000,  // Duration of the animation
+        easing: 'ease-in-out', // Easing function
+        once: true // Animation happens only once
+    });
+</script>
+
+<!-- About Section -->
+<section id="about" class="py-20 bg-slate-900 bg-opacity-50" data-aos="fade-up">
+    <div class="container mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-12 text-center" data-aos="fade-down" data-aos-delay="200"><span class="gradient-text">About Me</span></h2>
+        <div class="flex flex-col md:flex-row items-center">
+            <div class="md:w-1/3 mb-8 md:mb-0 flex justify-center" data-aos="zoom-in" data-aos-delay="400">
+                <div class="relative w-80 h-80">
+                    <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500 to-purple-600 blur-xl opacity-30"></div>
+                    <div class="relative rounded-2xl bg-slate-800 w-full h-full flex items-center justify-center overflow-hidden border-2 border-blue-500 border-opacity-30">
+                        <div class="w-[95%] h-[95%] rounded-xl bg-slate-900 flex items-center justify-center">
+                            <img src="/assets/img/foto.jpg" alt="Profile" class="w-full h-full rounded-xl object-cover object-center">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="md:w-2/3 md:pl-12" data-aos="fade-left" data-aos-delay="600">
+                <h3 class="text-2xl font-semibold mb-4">Who am I?</h3>
+               <p class="mb-6 text-slate-300" style="text-align: justify;">
+                  Informatics Engineering graduate from Institut Teknologi Nasional Bandung (GPA 3.12), with solid experience in data entry, project coordination, and technical implementation. Skilled in Python, Java, and Android development. Passionate about learning new technologies and solving real-world problems through software development. Experienced in working both independently and in a team.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="flex items-center" data-aos="fade-up" data-aos-delay="700">
+                        <div class="mr-4 text-blue-400">
+                            <i class="fas fa-user-graduate text-2xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Education</h4>
+                            <p class="text-slate-300">S1-Informatics, ITENAS Bandung</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center" data-aos="fade-up" data-aos-delay="800">
+                        <div class="mr-4 text-purple-400">
+                            <i class="fas fa-phone-alt text-2xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Phone</h4>
+                            <p class="text-slate-300">081324580328</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center" data-aos="fade-up" data-aos-delay="900">
+                        <div class="mr-4 text-blue-400">
+                            <i class="fas fa-envelope text-2xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Email</h4>
+                            <p class="text-slate-300">habilmuhammadr01@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center" data-aos="fade-up" data-aos-delay="1000">
+                        <div class="mr-4 text-purple-400">
+                            <i class="fas fa-map-marker-alt text-2xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Location</h4>
+                            <p class="text-slate-300">Bandung, Indonesia</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex space-x-4 mt-8 justify-center lg:justify-start" data-aos="zoom-in" data-aos-delay="1100">
+                    <a href="https://www.linkedin.com/in/habilmuhammadrizky/" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-blue-500 transition-all glow">
+                        <i class="fab fa-linkedin-in text-blue-400"></i>
+                    </a>
+                    <a href="https://www.instagram.com/habilmuhammadr/" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-blue-400 transition-all glow">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                    <a href="https://github.com/habilmuhammad" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-purple-600 transition-all glow">
+                        <i class="fab fa-github text-purple-400"></i>
+                    </a>
+                    <a href="https://wa.me/081324580328" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-blue-600 transition-all glow">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </a>
+                </div>
+
+                <!-- Tombol Download CV -->
+                <div class="mt-8 flex justify-center" data-aos="fade-up" data-aos-delay="1200">
+                    <button onclick="openCVModal()" 
+                    class="inline-flex items-center px-8 py-4 md:px-6 md:py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-full shadow-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-300">
+                        <i class="fas fa-download mr-3"></i>View My Resume
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+  
+    <!-- Modal PDF -->
+<div id="cvModal" class="fixed inset-0 bg-black bg-opacity-60 hidden items-center justify-center z-50">
+  <div class="bg-white p-4 rounded-lg w-[95%] max-w-4xl h-[90vh] relative flex flex-col">
+    <button onclick="closeCVModal()" 
+      class="absolute top-2 right-3 text-red-500 text-4xl hover:text-red-700 hover:scale-110 transition duration-200 ease-in-out">
+      &times;
+    </button>
+    <div class="flex-grow overflow-hidden mt-8">
+      <iframe id="cvFrame" src="HabilMuhammadRizky_CV.pdf"
+        class="w-full h-full rounded-md" frameborder="0"></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- Script -->
+<script>
+  function openCVModal() {
+    const modal = document.getElementById('cvModal');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+
+  function closeCVModal() {
+    const modal = document.getElementById('cvModal');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+</script>
+    
+    <!-- Experience Section -->
+    <section id="experience" class="py-20" data-aos="fade-up">
+    <div class="container mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-12 text-center"><span class="gradient-text">Experience</span></h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Work Experience -->
+          <div data-aos="fade-right" data-aos-delay="200">
+    <h3 class="text-2xl font-semibold mb-6 flex items-center">
+        <i class="fas fa-briefcase mr-3 text-blue-400"></i> Work Experience
+    </h3>
+
+    <div class="space-y-8">
+        <!-- TPS Supervisor -->
+        <div class="timeline-item" data-aos="fade-up" data-aos-delay="300">
+            <div class="timeline-dot">
+                <i class="fas fa-briefcase text-xs text-white"></i>
+            </div>
+            <div class="bg-slate-800 bg-opacity-50 rounded-xl p-6 card-hover">
+                <div class="flex justify-between items-start mb-2">
+                    <h4 class="font-bold text-lg">Supervisor TPS</h4>
+                    <span class="text-sm bg-blue-900 bg-opacity-50 px-2 py-1 rounded">11/2024 - 11/2024</span>
+                </div>
+                <h5 class="text-blue-400 mb-3">Bawaslu Bandung City</h5>
+                <ul class="list-disc pl-5 text-slate-300 space-y-1">
+                    <li>Monitor the Voting Process: Ensure all stages follow the rules</li>
+                    <li>Ensure Voter Registration: Monitor registered voters</li>
+                    <li>Ensure Valid Ballots: Check ballot validity</li>
+                    <li>Document Events: Record important events or violations</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Data Entry -->
+        <div class="timeline-item" data-aos="fade-up" data-aos-delay="500">
+            <div class="timeline-dot">
+                <i class="fas fa-database text-xs text-white"></i>
+            </div>
+            <div class="bg-slate-800 bg-opacity-50 rounded-xl p-6 card-hover">
+                <div class="flex justify-between items-start mb-2">
+                    <h4 class="font-bold text-lg">Data Entry</h4>
+                    <span class="text-sm bg-blue-900 bg-opacity-50 px-2 py-1 rounded">01/2024 - 03/2024</span>
+                </div>
+                <h5 class="text-blue-400 mb-3">PT Aku Solusi Digital Indonesia</h5>
+                <ul class="list-disc pl-5 text-slate-300 space-y-1">
+                    <li>Entering data users to the database</li>
+                    <li>Checking Data Quality: Reviewing entered data</li>
+                    <li>Organizing and Managing Data</li>
+                    <li>Updating Information</li>
+                    <li>Protecting Data Confidentiality</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Education & Certificates -->
+<div>
+  <h3 class="text-2xl font-semibold mb-6 flex items-center" data-aos="fade-down">
+    <i class="fas fa-graduation-cap mr-3 text-purple-400"></i> Education & Certificates
+  </h3>
+
+  <div class="space-y-8">
+
+    <!-- ITENAS -->
+    <div class="timeline-item" data-aos="fade-up">
+      <div class="timeline-dot">
+        <i class="fas fa-university text-xs text-white"></i>
+      </div>
+      <div class="bg-slate-800 bg-opacity-50 rounded-xl p-6 transition duration-200 transform hover:scale-105 hover:shadow-lg card-hover">
+        <div class="flex justify-between items-start mb-2">
+          <h4 class="font-bold text-lg">S1-Informatics</h4>
+        </div>
+        <h5 class="text-purple-400 mb-3">National Institute Of Technology (ITENAS)</h5>
+        <p class="text-slate-300">GPA: 3.12</p>
+      </div>
+    </div>
+
+    <!-- Certificate 1 -->
+    <div class="timeline-item" data-aos="fade-up">
+      <div class="timeline-dot">
+        <i class="fas fa-certificate text-xs text-white"></i>
+      </div>
+      <div class="bg-slate-800 bg-opacity-50 rounded-xl p-6 transition duration-400 transform hover:scale-105 hover:shadow-lg card-hover">
+        <div class="flex justify-between items-start mb-2">
+          <h4 class="font-bold text-lg">Development of an Interactive Website for Bangbayang Village</h4>
+        </div>
+        <h5 class="text-purple-400 mb-3">Commissioned by the Ministry of Law and Human Rights of the Republic of Indonesia</h5>
+        <button onclick="openCertificate('/assets/img/certificate/Hakcipta.jpeg')" class="mt-2 text-sm text-blue-400 hover:underline">
+          View Certificate
+        </button>
+      </div>
+    </div>
+
+    <!-- Certificate 2 -->
+    <div class="timeline-item" data-aos="fade-up">
+      <div class="timeline-dot">
+        <i class="fas fa-certificate text-xs text-white"></i>
+      </div>
+      <div class="bg-slate-800 bg-opacity-50 rounded-xl p-6 transition duration-600 transform hover:scale-105 hover:shadow-lg card-hover">
+        <div class="flex justify-between items-start mb-2">
+          <h4 class="font-bold text-lg">Intro to Data Analytics</h4>
+        </div>
+        <h5 class="text-purple-400 mb-3">RevoU</h5>
+        <button onclick="openCertificate('/assets/img/certificate/revou.jpg')" class="mt-2 text-sm text-blue-400 hover:underline">
+          View Certificate
+        </button>
+      </div>
+    </div>
+
+    <!-- Certificate 3 -->
+    <div class="timeline-item" data-aos="fade-up">
+      <div class="timeline-dot">
+        <i class="fas fa-certificate text-xs text-white"></i>
+      </div>
+      <div class="bg-slate-800 bg-opacity-50 rounded-xl p-6 transition duration-800 transform hover:scale-105 hover:shadow-lg card-hover">
+        <div class="flex justify-between items-start mb-2">
+          <h4 class="font-bold text-lg">CSS Certificate</h4>
+        </div>
+        <h5 class="text-purple-400 mb-3">HackerRank</h5>
+        <button onclick="openCertificate('/assets/img/certificate/css.jpg')" class="mt-2 text-sm text-blue-400 hover:underline">
+          View Certificate
+        </button>
+      </div>
+    </div>
+
+    <!-- Certificate 4 -->
+    <div class="timeline-item" data-aos="fade-up">
+      <div class="timeline-dot">
+        <i class="fas fa-certificate text-xs text-white"></i>
+      </div>
+      <div class="bg-slate-800 bg-opacity-50 rounded-xl p-6 transition duration-1000 transform hover:scale-105 hover:shadow-lg card-hover">
+        <div class="flex justify-between items-start mb-2">
+          <h4 class="font-bold text-lg">National Seminar on Community Service</h4>
+        </div>
+        <h5 class="text-purple-400 mb-3">National Institute of Technology (ITENAS)</h5>
+        <button onclick="openCertificate('/assets/img/certificate/itenas2.jpeg')" class="mt-2 text-sm text-blue-400 hover:underline">
+          View Certificate
+        </button>
+      </div>
+    </div>
+
+    <!-- Certificate 5 -->
+    <div class="timeline-item" data-aos="fade-up">
+      <div class="timeline-dot">
+        <i class="fas fa-certificate text-xs text-white"></i>
+      </div>
+      <div class="bg-slate-800 bg-opacity-50 rounded-xl p-6 transition duration-1200 transform hover:scale-105 hover:shadow-lg card-hover">
+        <div class="flex justify-between items-start mb-2">
+          <h4 class="font-bold text-lg">Dissemination of Student Publications</h4>
+        </div>
+        <h5 class="text-purple-400 mb-3">National Institute of Technology (ITENAS)</h5>
+        <button onclick="openCertificate('/assets/img/certificate/itenas1.jpeg')" class="mt-2 text-sm text-blue-400 hover:underline">
+          View Certificate
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL POPUP -->
+<div id="certModal" class="fixed inset-0 bg-black bg-opacity-60 hidden items-center justify-center z-50">
+  <div class="bg-slate-900 p-4 rounded-lg max-w-3xl relative">
+    <button onclick="closeCertificate()" class="absolute top-2 right-3 text-red-500 text-5xl hover:text-red-700 hover:scale-110 transition duration-200 ease-in-out">
+      &times;
+    </button>
+    <img id="certImage" src="" alt="Sertifikat" class="max-w-full max-h-[80vh] rounded" />
+  </div>
+</div>
+
+<!-- SCRIPT -->
+<script>
+  function openCertificate(imageSrc) {
+    document.getElementById('certImage').src = imageSrc;
+    document.getElementById('certModal').classList.remove('hidden');
+    document.getElementById('certModal').classList.add('flex');
+  }
+
+  function closeCertificate() {
+    document.getElementById('certModal').classList.add('hidden');
+    document.getElementById('certModal').classList.remove('flex');
+  }
+</script>
+    </section>
+    
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-slate-900 bg-opacity-50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold mb-12 text-center"><span class="gradient-text">Projects</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Arabic Handwriting Recognition -->
+                <div class="bg-slate-800 bg-opacity-50 rounded-xl overflow-hidden card-hover glow">
+                    <div class="h-48 bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
+                        <i class="fas fa-mobile-alt text-6xl text-white opacity-80"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-xl">Arabic Handwriting Recognition</h3>
+                            <!-- <span class="text-sm bg-blue-900 bg-opacity-50 px-2 py-1 rounded">04/2023 - 08/2024</span> -->
+                        </div>
+                        <p class="text-slate-300 mb-4">Developed MobilenetV3-Small architectural model to detect Arabic Handwriting with 98% accuracy.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs bg-blue-900 bg-opacity-30 px-2 py-1 rounded">Android</span>
+                            <span class="text-xs bg-blue-900 bg-opacity-30 px-2 py-1 rounded">CNN</span>
+                            <span class="text-xs bg-blue-900 bg-opacity-30 px-2 py-1 rounded">MobilenetV3</span>
+                        </div>
+                         <div class="mt-2">
+            <a href="/projects/Arabic-Handwriting-Recognition.html" 
+               class="inline-block bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:opacity-90 transition duration-300 ease-in-out shadow-md">
+                View Project
+            </a>
+        </div>
+                    </div>
+                </div>
+                
+                <!-- Temperature Detection Device -->
+                <div class="bg-slate-800 bg-opacity-50 rounded-xl overflow-hidden card-hover glow">
+                    <div class="h-48 bg-gradient-to-r from-purple-500 to-blue-600 flex items-center justify-center">
+                        <i class="fas fa-thermometer-half text-6xl text-white opacity-80"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-xl">Temperature Detection Device</h3>
+                            <!-- <span class="text-sm bg-purple-900 bg-opacity-50 px-2 py-1 rounded">12/2022 - 03/2023</span> -->
+                        </div>
+                        <p class="text-slate-300 mb-4">Conducted needs analysis, system design, and provided training for temperature detection devices at SMA BPI 1.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs bg-purple-900 bg-opacity-30 px-2 py-1 rounded">IoT</span>
+                            <span class="text-xs bg-purple-900 bg-opacity-30 px-2 py-1 rounded">System Design</span>
+                            <span class="text-xs bg-purple-900 bg-opacity-30 px-2 py-1 rounded">Training</span>
+                        </div>
+                         <div class="mt-2">
+           <a href="/projects/Temperature-Detection-Device.html" 
+               class="inline-block bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:opacity-90 transition duration-300 ease-in-out shadow-md">
+                View Project
+            </a>
+        </div>
+                    </div>
+                </div>
+                
+                <!-- Bangbayang Village Website -->
+                <div class="bg-slate-800 bg-opacity-50 rounded-xl overflow-hidden card-hover glow">
+                    <div class="h-48 bg-gradient-to-r from-blue-600 to-purple-500 flex items-center justify-center">
+                        <i class="fas fa-globe text-6xl text-white opacity-80"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-xl">Bangbayang Village Website</h3>
+                            <!-- <span class="text-sm bg-blue-900 bg-opacity-50 px-2 py-1 rounded">10/2022 - 12/2022</span> -->
+                        </div>
+                        <p class="text-slate-300 mb-4">Created an interactive website for Bangbayang Village with CRUD functionality for users, news, reviews and suggestions.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs bg-blue-900 bg-opacity-30 px-2 py-1 rounded">Web Development</span>
+                            <span class="text-xs bg-blue-900 bg-opacity-30 px-2 py-1 rounded">CRUD</span>
+                            <span class="text-xs bg-blue-900 bg-opacity-30 px-2 py-1 rounded">Backend</span>
+                        </div>
+                         <div class="mt-2">
+               <a href="/projects/Bangbayang-Village-Website.html" 
+               class="inline-block bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:opacity-90 transition duration-300 ease-in-out shadow-md">
+                View Project
+            </a>
+        </div>
+                    </div>
+                </div>
+                
+                <!-- SI-PPID Bandung City -->
+                <div class="bg-slate-800 bg-opacity-50 rounded-xl overflow-hidden card-hover glow">
+                    <div class="h-48 bg-gradient-to-r from-purple-600 to-blue-500 flex items-center justify-center">
+                        <i class="fas fa-city text-6xl text-white opacity-80"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-xl">SI-PPID Bandung City</h3>
+                            <!-- <span class="text-sm bg-purple-900 bg-opacity-50 px-2 py-1 rounded">08/2021 - 11/2021</span> -->
+                        </div>
+                        <p class="text-slate-300 mb-4">Designed the Bandung City SI-PPID website to provide online information requests during internship at Diskominfo Bandung.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs bg-purple-900 bg-opacity-30 px-2 py-1 rounded">Web Design</span>
+                            <span class="text-xs bg-purple-900 bg-opacity-30 px-2 py-1 rounded">Government</span>
+                            <span class="text-xs bg-purple-900 bg-opacity-30 px-2 py-1 rounded">Internship</span>
+                        </div>
+                         <div class="mt-2">
+            <a href="/projects/SI-PPID-Bandung.html" 
+               class="inline-block bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:opacity-90 transition duration-300 ease-in-out shadow-md">
+                View Project
+            </a>
+        </div>
+                    </div>
+                </div>
+
+                   <!-- Ninja Hidayah Game -->
+                <div class="bg-slate-800 bg-opacity-50 rounded-xl overflow-hidden card-hover glow">
+                    <div class="h-48 bg-gradient-to-r from-purple-600 to-blue-500 flex items-center justify-center">
+                        <i class="fa-solid fa-gamepad text-6xl text-white opacity-80"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-xl">Ninja Hidayah Game</h3>
+                            <!-- <span class="text-sm bg-purple-900 bg-opacity-50 px-2 py-1 rounded">08/2021 - 11/2021</span> -->
+                        </div>
+                        <p class="text-slate-300 mb-4">A medieval fantasy action-adventure game made with Unity (C#),players fight enemies, collect points, and regenerate health. Made for a game programming course.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs bg-purple-900 bg-opacity-30 px-2 py-1 rounded">Game</span>
+                            <span class="text-xs bg-purple-900 bg-opacity-30 px-2 py-1 rounded">Unity</span>
+                            <span class="text-xs bg-purple-900 bg-opacity-30 px-2 py-1 rounded">C#</span>
+                        </div>
+                         <div class="mt-2">
+            <a href="/projects/Ninja-hidayah-game.html" 
+               class="inline-block bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:opacity-90 transition duration-300 ease-in-out shadow-md">
+                View Project
+            </a>
+        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Skills Section -->
+     <section id="skills" class="py-20 bg-slate-900 bg-opacity-50" data-aos="fade-up">
+    <div class="container mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-12 text-center" data-aos="fade-up"><span class="gradient-text">Skills</span></h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12" data-aos="fade-up" data-aos-delay="100">
+            <!-- Technical Skills -->
+            <div>
+                <h3 class="text-2xl sm:text-3xl font-bold mb-8 flex items-center" data-aos="fade-right" data-aos-delay="150">
+                    <i class="fas fa-code mr-3 sm:mr-4 text-blue-400 text-3xl sm:text-4xl"></i> Technical Skills
+                </h3>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                    <div class="flex items-center p-3 sm:p-4 rounded-lg hover:text-blue-500 transition-colors duration-200 shadow-sm" data-aos="fade-up" data-aos-delay="100">
+                        <i class="fab fa-android text-green-500 text-3xl sm:text-4xl mr-3 sm:mr-4"></i>
+                        <div>
+                            <div class="font-semibold text-lg sm:text-xl">Android Studio</div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center p-3 sm:p-4 rounded-lg hover:text-orange-500 transition-colors duration-200 shadow-sm" data-aos="fade-up" data-aos-delay="200">
+                        <i class="fab fa-java text-orange-500 text-3xl sm:text-4xl mr-3 sm:mr-4"></i>
+                        <div>
+                            <div class="font-semibold text-lg sm:text-xl">Java</div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center p-3 sm:p-4 rounded-lg hover:text-red-500 transition-colors duration-200 shadow-sm" data-aos="fade-up" data-aos-delay="300">
+                        <i class="fab fa-laravel text-red-500 text-3xl sm:text-4xl mr-3 sm:mr-4"></i>
+                        <div>
+                            <div class="font-semibold text-lg sm:text-xl">Laravel</div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center p-3 sm:p-4 rounded-lg hover:text-indigo-500 transition-colors duration-200 shadow-sm" data-aos="fade-up" data-aos-delay="400">
+                        <i class="fab fa-php text-indigo-500 text-3xl sm:text-4xl mr-3 sm:mr-4"></i>
+                        <div>
+                            <div class="font-semibold text-lg sm:text-xl">PHP</div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center p-3 sm:p-4 rounded-lg hover:text-yellow-500 transition-colors duration-200 shadow-sm" data-aos="fade-up" data-aos-delay="500">
+                        <i class="fas fa-database text-yellow-500 text-3xl sm:text-4xl mr-3 sm:mr-4"></i>
+                        <div>
+                            <div class="font-semibold text-lg sm:text-xl">SQL</div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center p-3 sm:p-4 rounded-lg hover:text-blue-500 transition-colors duration-200 shadow-sm" data-aos="fade-up" data-aos-delay="600">
+                        <i class="fab fa-python text-blue-500 text-3xl sm:text-4xl mr-3 sm:mr-4"></i>
+                        <div>
+                            <div class="font-semibold text-lg sm:text-xl">Python</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Languages -->
+            <div>
+                <h3 class="text-2xl font-semibold mb-6 flex items-center" data-aos="fade-left" data-aos-delay="100">
+                    <i class="fas fa-language mr-3 text-purple-400"></i> Languages
+                </h3>
+
+                <div class="space-y-6">
+                    <div data-aos="fade-left" data-aos-delay="150">
+                        <div class="flex justify-between mb-2">
+                            <span class="font-medium">Indonesian</span>
+                            <span class="text-purple-400">Native</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 100%"></div>
+                        </div>
+                    </div>
+
+                    <div data-aos="fade-left" data-aos-delay="200">
+                        <div class="flex justify-between mb-2">
+                            <span class="font-medium">English</span>
+                            <span class="text-purple-400">Intermediate</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 70%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="text-2xl font-semibold mt-10 mb-6 flex items-center" data-aos="fade-left" data-aos-delay="250">
+                    <i class="fas fa-star mr-3 text-yellow-400"></i> Other Skills
+                </h3>
+
+                <div class="flex flex-wrap gap-3" data-aos="fade-left" data-aos-delay="300">
+                    <div class="px-4 py-2 bg-slate-800 bg-opacity-50 rounded-full flex items-center">
+                        <i class="fas fa-users mr-2 text-blue-400"></i>
+                        <span>Teamwork</span>
+                    </div>
+                    <div class="px-4 py-2 bg-slate-800 bg-opacity-50 rounded-full flex items-center">
+                        <i class="fas fa-lightbulb mr-2 text-purple-400"></i>
+                        <span>Problem Solving</span>
+                    </div>
+                    <div class="px-4 py-2 bg-slate-800 bg-opacity-50 rounded-full flex items-center">
+                        <i class="fas fa-project-diagram mr-2 text-blue-400"></i>
+                        <span>Project Management</span>
+                    </div>
+                    <div class="px-4 py-2 bg-slate-800 bg-opacity-50 rounded-full flex items-center">
+                        <i class="fas fa-comments mr-2 text-purple-400"></i>
+                        <span>Communication</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+    
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-slate-900 bg-opacity-50" data-aos="fade-up">
+    <div class="container mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-12 text-center" data-aos="fade-down">
+            <span class="gradient-text">Get In Touch</span>
+        </h2>
+        
+        <div class="flex flex-col md:flex-row" data-aos="fade-up" data-aos-delay="100">
+            <!-- Contact Info -->
+            <div class="md:w-1/2 mb-12 md:mb-0 md:pr-8" data-aos="fade-right" data-aos-delay="150">
+                <h3 class="text-2xl font-semibold mb-6">Contact Information</h3>
+                <p class="mb-8 text-slate-300">Feel free to reach out to me for any questions or opportunities. I'll get back to you as soon as possible!</p>
+                
+                <div class="space-y-6">
+                    <div class="flex items-start" data-aos="fade-up" data-aos-delay="200">
+                        <div class="mr-4 text-blue-400 text-xl">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Email</h4>
+                            <p class="text-slate-300">habilmuhammadr01@gmail.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start" data-aos="fade-up" data-aos-delay="250">
+                        <div class="mr-4 text-purple-400 text-xl">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Phone</h4>
+                            <p class="text-slate-300">081324580328</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start" data-aos="fade-up" data-aos-delay="300">
+                        <div class="mr-4 text-blue-400 text-xl">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Location</h4>
+                            <p class="text-slate-300">Bandung, Indonesia</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-8" data-aos="fade-up" data-aos-delay="350">
+                    <h4 class="font-semibold mb-4">Follow Me</h4>
+                    <div class="flex space-x-4">
+                        <a href="https://www.linkedin.com/in/habilmuhammadrizky/" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-blue-500 transition-all glow">
+                            <i class="fab fa-linkedin-in text-blue-400"></i>
+                        </a>
+                        <a href="https://www.instagram.com/habilmuhammadr/" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-pink-500 transition-all glow">
+                            <i class="fab fa-instagram text-pink-400"></i>
+                        </a>
+                        <a href="https://github.com/habilmuhammad" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-purple-600 transition-all glow">
+                            <i class="fab fa-github text-purple-400"></i>
+                        </a>
+                        <a href="https://wa.me/081324580328" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-green-500 transition-all glow">
+                            <i class="fab fa-whatsapp text-green-400"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="md:w-1/2" data-aos="fade-left" data-aos-delay="200">
+                <form id="contact-form" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div data-aos="zoom-in-up" data-aos-delay="250">
+                            <label for="name" class="block mb-2 font-medium">Your Name</label>
+                            <input type="text" id="name" name="user_name" class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter your name" required>
+                        </div>
+                        <div data-aos="zoom-in-up" data-aos-delay="300">
+                            <label for="email" class="block mb-2 font-medium">Your Email</label>
+                            <input type="email" id="email" name="user_email" class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter your email" required>
+                        </div>
+                    </div>
+                    <div data-aos="zoom-in-up" data-aos-delay="350">
+                        <label for="subject" class="block mb-2 font-medium">Subject</label>
+                        <input type="text" id="subject" name="user_subject" class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter subject" required>
+                    </div>
+                    <div data-aos="zoom-in-up" data-aos-delay="400">
+                        <label for="message" class="block mb-2 font-medium">Message</label>
+                        <textarea id="message" name="user_message" rows="5" class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter your message" required></textarea>
+                    </div>
+                    <div data-aos="fade-up" data-aos-delay="500">
+                        <button type="submit" class="px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg font-medium hover:opacity-90 transition-all glow w-full md:w-auto">
+                            Send Message
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+                    <script>
+                      (function() {
+                        emailjs.init('iBBW0taQoJpWuRIEX'); // Ganti public key EmailJS kamu
+                      })();
+                    
+                      document.getElementById('contact-form').addEventListener('submit', function(event) {
+                        event.preventDefault();
+                    
+                        emailjs.sendForm('service_2wprmcb', 'template_12ys0fd', this)
+                          .then(() => {
+                            Swal.fire({
+                              title: 'Berhasil!',
+                              text: 'Pesan kamu sudah dikirim.',
+                              icon: 'success',
+                              confirmButtonText: 'OK'
+                            });
+                            this.reset(); // Kosongkan form setelah sukses
+                          }, (error) => {
+                            console.log('FAILED...', error);
+                            Swal.fire({
+                              title: 'Gagal!',
+                              text: 'Pesan gagal dikirim. Coba lagi nanti.',
+                              icon: 'error',
+                              confirmButtonText: 'OK'
+                            });
+                          });
+                      });
+                    </script>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="py-8 bg-slate-900">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <a href="#" class="text-2xl font-bold gradient-text">HMR</a>
+                </div>
+                <div class="text-center md:text-right">
+                    <p class="text-slate-400">© 2025 Habil Muhammad Rizky. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <a href="home" class="back-to-top">
+    <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <script>
+
+// Back to Top Button
+const backToTop = document.querySelector('.back-to-top');
+
+window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 300) {
+        backToTop.classList.add('active');
+    } else {
+        backToTop.classList.remove('active');
+    }
+});
+
+// Smooth scrolling for navigation links and back-to-top
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') {
+            // Scroll to top if href="#"
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        } else {
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        }
+    });
+});
+
+        
+        </script>
+    </body>
+</html>
+    
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Mobile menu toggle
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                
+                // Close mobile menu if open
+                const mobileMenu = document.getElementById('mobile-menu');
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+        
+        // Initialize particles.js
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#3b82f6"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#3b82f6",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+        
+        // Initialize 3D background
+        const init3DBackground = () => {
+            const container = document.getElementById('3d-background');
+            
+            // Scene setup
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            container.appendChild(renderer.domElement);
+            
+            // Add lights
+            const ambientLight = new THREE.AmbientLight(0x404040);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+            directionalLight.position.set(1, 1, 1);
+            scene.add(directionalLight);
+            
+            // Add floating shapes
+            const geometry = new THREE.IcosahedronGeometry(1, 0);
+            const material = new THREE.MeshPhongMaterial({
+                color: 0x3b82f6,
+                transparent: true,
+                opacity: 0.3,
+                wireframe: true
+            });
+            
+            const shapes = [];
+            const count = 8;
+            
+            for (let i = 0; i < count; i++) {
+                const shape = new THREE.Mesh(geometry, material);
+                
+                // Random position
+                shape.position.x = Math.random() * 20 - 10;
+                shape.position.y = Math.random() * 20 - 10;
+                shape.position.z = Math.random() * 20 - 10;
+                
+                // Random rotation
+                shape.rotation.x = Math.random() * Math.PI;
+                shape.rotation.y = Math.random() * Math.PI;
+                
+                // Random scale
+                const scale = Math.random() * 0.5 + 0.5;
+                shape.scale.set(scale, scale, scale);
+                
+                // Store reference to shape for animation
+                shapes.push({
+                    mesh: shape,
+                    speed: {
+                        x: Math.random() * 0.01 - 0.005,
+                        y: Math.random() * 0.01 - 0.005,
+                        z: Math.random() * 0.01 - 0.005
+                    }
+                });
+                
+                scene.add(shape);
+            }
+            
+            // Camera position
+            camera.position.z = 5;
+            
+            // Animation
+            const animate = () => {
+                requestAnimationFrame(animate);
+                
+                // Rotate shapes
+                shapes.forEach(shape => {
+                    shape.mesh.rotation.x += shape.speed.x;
+                    shape.mesh.rotation.y += shape.speed.y;
+                    shape.mesh.rotation.z += shape.speed.z;
+                });
+                
+                renderer.render(scene, camera);
+            };
+            
+            animate();
+            
+            // Handle window resize
+            const handleResize = () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            };
+            
+            window.addEventListener('resize', handleResize);
+        };
+        
+        // Initialize 3D background when page loads
+        window.addEventListener('load', init3DBackground);
+        
+        // Animate skill bars when they come into view
+        const animateSkillBars = () => {
+            const skillBars = document.querySelectorAll('.skill-progress');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const width = entry.target.style.width;
+                        entry.target.style.width = '0';
+                        setTimeout(() => {
+                            entry.target.style.width = width;
+                        }, 100);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            skillBars.forEach(bar => {
+                observer.observe(bar);
+            });
+        };
+        
+        // Initialize skill bar animation
+        window.addEventListener('load', animateSkillBars);
+        
+    </script>
+
+    
+</body>
+</html>
